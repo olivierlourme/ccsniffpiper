@@ -1,5 +1,6 @@
 ccsniffpiper
 ============
+**CAUTION:** This fork of ccsniffpiper addresses the issue of non consistent timestamps (negative or unordered) from appearing time to time while using `ccsniffpiper.py`. An example of such timestamps is in [dum4.pcap](pcap/dum4.pcap).
 
 *Live Packet Sniffer to Wireshark bridge for IEEE 802.15.4 networks.*
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-
+   SEARCH FOR "MH-OL" INITIALS TO LOCALIZE UNCONSISTENT TIMESTAMPS ISSUE ADDRESSING
    ccsniffpiper - a python module to connect to the CC2531emk USB dongle
                  and pipe the sniffed packets to wireshark!
    Copyright (c) 2013, Andrew Dodd (andrew.john.dodd@gmail.com)
@@ -86,8 +86,11 @@ class Frame(object):
                            for c in self.__macPDUByteArray).rstrip()
 
     def __generate_frame_hdr(self):
-        sec = int(self.timestampUsec / 1000000)
-        usec = int(self.timestampUsec - sec)
+        timestampNsec = time.time_ns() # hack MH-OL as there were negative timestamps!
+        sec = int(timestampNsec / 1_000_000_000) # hack MH-OL
+        usec = int((timestampNsec %1_000_000_000)/1000) # hack MH-OL
+        #sec = int(self.timestampUsec / 1000000)
+        #usec = int(self.timestampUsec - sec) # OL 2022 june 14- it was probably wrong!
         return struct.pack(Frame.PCAP_FRAME_HDR_FMT, sec, usec, self.len,
                            self.len)
 
